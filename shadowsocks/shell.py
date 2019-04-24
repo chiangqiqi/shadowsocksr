@@ -166,6 +166,11 @@ def get_config(is_local):
             with open(config_path, 'rb') as f:
                 try:
                     config = parse_json_in_str(remove_comment(f.read().decode('utf8')))
+                    if 'configs' in config:
+                        for i,_config in enumerate(config['configs']):
+                            print(i, _config['remarks'].decode('utf8'))
+                        i = int(input("which node would you choose"))
+                        config = config['configs'][i]
                 except ValueError as e:
                     logging.error('found an error in config.json: %s', str(e))
                     sys.exit(1)
